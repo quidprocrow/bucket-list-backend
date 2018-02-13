@@ -50,6 +50,7 @@ const update = (req, res, next) => {
 }
 
 const destroy = (req, res, next) => {
+  console.log('hey there..')
   req.item.remove()
     .then(() => res.sendStatus(204))
     .catch(next)
@@ -63,7 +64,7 @@ module.exports = controller({
   destroy
 }, { before: [
   { method: setUser, only: ['index', 'show'] },
-  { method: authenticate, except: ['index', 'show', 'create'] },
+  { method: authenticate, except: ['index', 'show', 'create', 'destroy', 'update'] },
   { method: setModel(Item), only: ['show'] },
   { method: setModel(Item, { forUser: true }), only: ['update', 'destroy'] }
 ] })
