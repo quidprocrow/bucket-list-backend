@@ -24,14 +24,17 @@ const show = (req, res) => {
 }
 
 const create = (req, res, next) => {
-  const item = Object.assign(req.body.item, {
-    _owner: req.user._id
-  })
+  console.log('inside create')
+  const item = Object.assign(req.body.item)
+    // , {
+  //   _owner: req.user._id
+  // })
   Item.create(item)
     .then(item =>
       res.status(201)
         .json({
-          item: item.toJSON({ virtuals: true, user: req.user })
+          item: item.toJSON()
+          // ({ virtuals: true, user: req.user })
         }))
     .catch(next)
 }
