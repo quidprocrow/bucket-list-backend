@@ -41,7 +41,6 @@ const create = (req, res, next) => {
 
 const update = (req, res, next) => {
   delete req.body.item._owner  // disallow owner reassignment.
-
   req.item.update(req.body.item)
     .then(() => res.sendStatus(204))
     .catch(next)
@@ -61,7 +60,6 @@ module.exports = controller({
   destroy
 }, { before: [
   { method: setUser, only: ['index', 'show'] },
-  { method: authenticate, except: ['show'] },
-  { method: setModel(Item), only: ['show'] },
-  { method: setModel(Item, { forUser: true }), only: ['update', 'destroy'] }
+  { method: authenticate },
+  { method: setModel(Item, { forUser: true }), only: ['update', 'destroy', 'show'] }
 ] })
