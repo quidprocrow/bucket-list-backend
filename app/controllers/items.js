@@ -50,7 +50,6 @@ const update = (req, res, next) => {
 }
 
 const destroy = (req, res, next) => {
-  console.log('hey there..')
   req.item.remove()
     .then(() => res.sendStatus(204))
     .catch(next)
