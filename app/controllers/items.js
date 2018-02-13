@@ -26,11 +26,9 @@ const show = (req, res) => {
 }
 
 const create = (req, res, next) => {
-  console.log('inside create')
-  const item = Object.assign(req.body.item)
-    // , {
-  //   _owner: req.user._id
-  // })
+  const item = Object.assign(req.body.item, {
+    _owner: req.user._id
+  })
   Item.create(item)
     .then(item =>
       res.status(201)
@@ -63,7 +61,7 @@ module.exports = controller({
   destroy
 }, { before: [
   { method: setUser, only: ['index', 'show'] },
-  { method: authenticate, except: ['index', 'show', 'create', 'destroy', 'update'] },
+  { method: authenticate, except: ['index', 'show', 'destroy', 'update'] },
   { method: setModel(Item), only: ['show'] },
   { method: setModel(Item, { forUser: true }), only: ['update', 'destroy'] }
 ] })
