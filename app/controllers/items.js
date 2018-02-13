@@ -12,14 +12,16 @@ const index = (req, res, next) => {
   Item.find()
     .then(items => res.json({
       items: items.map((e) =>
-        e.toJSON({ virtuals: true, user: req.user }))
+        e.toJSON())
+        // e.toJSON({ virtuals: true, user: req.user }))
     }))
     .catch(next)
 }
 
 const show = (req, res) => {
   res.json({
-    item: req.item.toJSON({ virtuals: true, user: req.user })
+    item: req.item.toJSON()
+    // item: req.item.toJSON({ virtuals: true, user: req.user })
   })
 }
 
