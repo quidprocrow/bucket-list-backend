@@ -12,23 +12,23 @@ const index = (req, res, next) => {
   Item.find()
     .then(items => res.json({
       items: items.map((e) =>
-        e.toJSON({ virtuals: true, user: req.user }))
+        e.toJSON())
+        // e.toJSON({ virtuals: true, user: req.user }))
     }))
     .catch(next)
 }
 
 const show = (req, res) => {
   res.json({
-    item: req.item.toJSON({ virtuals: true, user: req.user })
+    item: req.item.toJSON()
+    // item: req.item.toJSON({ virtuals: true, user: req.user })
   })
 }
 
 const create = (req, res, next) => {
-  console.log('inside create')
-  const item = Object.assign(req.body.item)
-    // , {
-  //   _owner: req.user._id
-  // })
+  const item = Object.assign(req.body.item, {
+    _owner: req.user._id
+  })
   Item.create(item)
     .then(item =>
       res.status(201)
@@ -61,7 +61,7 @@ module.exports = controller({
   destroy
 }, { before: [
   { method: setUser, only: ['index', 'show'] },
-  { method: authenticate, except: ['index', 'show', 'create'] },
+  { method: authenticate, except: ['index', 'show', 'update'] },
   { method: setModel(Item), only: ['show'] },
   { method: setModel(Item, { forUser: true }), only: ['update', 'destroy'] }
 ] })
