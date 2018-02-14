@@ -4,10 +4,15 @@ const controller = require('lib/wiring/controller')
 const models = require('app/models')
 const Item = models.item
 
+// Since authentication runs before all methods, an inauthenticated user cannot
+// view any items.
 const authenticate = require('./concerns/authenticate')
+
 const setUser = require('./concerns/set-current-user')
 const setModel = require('./concerns/set-mongoose-model')
 
+// The query returns only that user's items, so someone cannot index someone
+// else's items.
 const index = (req, res, next) => {
   Item.find({ '_owner': req.user._id })
     .then(items => res.json({
@@ -18,6 +23,8 @@ const index = (req, res, next) => {
     .catch(next)
 }
 
+// The setModel method runs before show, making sure that only items belonging
+// to the requesting user can be shown to them.
 const show = (req, res) => {
   res.json({
     item: req.item.toJSON()
@@ -26,6 +33,7 @@ const show = (req, res) => {
 }
 
 const create = (req, res, next) => {
+  // Object.assign adds the _owner information as a key in the request body.
   const item = Object.assign(req.body.item, {
     _owner: req.user._id
   })
@@ -59,6 +67,8 @@ module.exports = controller({
   update,
   destroy
 }, { before: [
+  // Authenticate runs before all methods; user restriction occurs only before
+  // those where forUser is set to true.
   { method: setUser, only: ['index', 'show'] },
   { method: authenticate },
   { method: setModel(Item, { forUser: true }), only: ['update', 'destroy', 'show'] }
