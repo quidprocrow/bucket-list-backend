@@ -49,8 +49,14 @@ const create = (req, res, next) => {
 
 const update = (req, res, next) => {
   delete req.body.item._owner  // disallow owner reassignment.
+  const itemId = req.item._id
   req.item.update(req.body.item)
-    .then(() => res.sendStatus(204))
+    .then(() => Item.findOne({ '_id': itemId }))
+    .then(item =>
+      res.status(201)
+        .json({
+          item: item.toJSON()
+        }))
     .catch(next)
 }
 
