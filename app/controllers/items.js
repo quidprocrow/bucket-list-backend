@@ -53,7 +53,7 @@ const update = (req, res, next) => {
   req.item.update(req.body.item)
     .then(() => Item.findOne({ '_id': itemId }))
     .then(item =>
-      res.status(201)
+      res.status(200)
         .json({
           item: item.toJSON()
         }))
