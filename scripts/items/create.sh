@@ -4,7 +4,7 @@ API="http://localhost:4741"
 URL_PATH="/items"
 TITLE="a dang title"
 DESC="a dang desc"
-TOKEN="hjz0Z+XMYFB1sNuWQQzMaagV9xRnaX949fwlgJZbYmU=--DzaYDLPkuBrCY9i2QFNuH13Xl5ffpdQ8wxkV4ntkgoA="
+TOKEN="WF12X+MoUcLZ/YBLKJKuH7kNP5brHqEztWLVCBoUWwc=--SzjwBguNTmSxcfTzja9fnem3qq7v4XS/+H1DJuTaFJA="
 
 curl "${API}${URL_PATH}" \
   --include \
