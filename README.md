@@ -69,7 +69,6 @@ Our goals for this project were to meet the Minimal Viable Product (illustrated 
 
 To do this, we created a culture code that was observed throughout the five day project.
 
-```
 1. Recognize and leverage each other's strengths to create a better product
 2. Communicate directly
 3. Communicate about availability through slack
@@ -82,7 +81,7 @@ To do this, we created a culture code that was observed throughout the five day 
 10. Before we move to the next step or feature, review for possible issues, report them to the issue queue, and move forward.
 11.  No changes to database structure without group consensus.
 12. After we reach our Minimal Viable Product: only User Experience changes.
-```
+
 
 In particular, we adhered closely to a daily practice of stand-up (addressing what we've accomplished, what we're working on, and what might be blocking us) and retro (what we've done and what we will aim to do the next day). No pull or merge request was made without unanimous consent by the group; and as we tri-programmed together for almost the entire duration of the project, almost every commit was approved by the whole group prior to a pull request.
 
@@ -113,7 +112,7 @@ curl --include --request POST http://localhost:4741/sign-up \
 ```
 
 ```sh
-scripts/sign-up.sh
+sh scripts/sign-up.sh
 ```
 
 Response:
@@ -146,7 +145,7 @@ curl --include --request POST http://localhost:4741/sign-in \
 ```
 
 ```sh
-scripts/sign-in.sh
+sh scripts/sign-in.sh
 ```
 
 Response:
@@ -181,7 +180,7 @@ curl --include --request PATCH http://localhost:4741/change-password/$ID \
 ```
 
 ```sh
-ID=1 TOKEN=33ad6372f795694b333ec5f329ebeaaa scripts/change-password.sh
+ID=1 TOKEN=33ad6372f795694b333ec5f329ebeaaa sh scripts/change-password.sh
 ```
 
 Response:
@@ -200,7 +199,7 @@ curl --include --request DELETE http://localhost:4741/sign-out/$ID \
 ```
 
 ```sh
-ID=1 TOKEN=33ad6372f795694b333ec5f329ebeaaa scripts/sign-out.sh
+ID=1 TOKEN=33ad6372f795694b333ec5f329ebeaaa sh  scripts/sign-out.sh
 ```
 
 Response:
@@ -226,7 +225,7 @@ curl --include --request GET http://localhost:4741/users \
 ```
 
 ```sh
-TOKEN=33ad6372f795694b333ec5f329ebeaaa scripts/users.sh
+TOKEN=33ad6372f795694b333ec5f329ebeaaa sh scripts/users.sh
 ```
 
 Response:
@@ -259,7 +258,7 @@ curl --include --request GET http://localhost:4741/users/$ID \
 ```
 
 ```sh
-ID=2 TOKEN=33ad6372f795694b333ec5f329ebeaaa scripts/user.sh
+ID=2 TOKEN=33ad6372f795694b333ec5f329ebeaaa sh scripts/user.sh
 ```
 
 Response:
@@ -329,6 +328,11 @@ curl "${API}${URL_PATH}/${ID}" \
 
 echo
 ```
+```sh
+API="http://localhost:4741" URL_PATH="/items"
+TOKEN="${TOKEN}" ID=2
+sh scripts/items/index.sh
+```
 
 Response:
 
@@ -363,6 +367,11 @@ curl "${API}${URL_PATH}" \
   }'
 
 echo
+```
+```sh
+API="http://localhost:4741" URL_PATH="/items"
+TOKEN="${TOKEN}" TITLE="title" DESCRIPTION="description"
+sh scripts/items/index.sh
 ```
 
 Response:
